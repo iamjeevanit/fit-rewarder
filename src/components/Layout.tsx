@@ -18,12 +18,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <main className="flex-1 w-full max-w-md mx-auto px-4 pb-20 pt-6">
         {children}
       </main>
       
-      <nav className="fixed bottom-0 left-0 right-0 bg-white glass-morphism border-t border-gray-100">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-10">
         <ul className="flex items-center justify-around max-w-md mx-auto">
           {navigationItems.map((item) => {
             const isActive = location.pathname === item.path;

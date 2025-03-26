@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { achievementsData } from '@/lib/workoutData';
 import RewardBadge from '@/components/RewardBadge';
@@ -8,6 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 const Achievements = () => {
   const unlockedAchievements = achievementsData.filter(achievement => achievement.unlocked);
   const lockedAchievements = achievementsData.filter(achievement => !achievement.unlocked);
+  
+  useEffect(() => {
+    console.log("Achievements page rendered");
+    console.log("Unlocked achievements:", unlockedAchievements.length);
+    console.log("Locked achievements:", lockedAchievements.length);
+  }, []);
   
   return (
     <Layout>
