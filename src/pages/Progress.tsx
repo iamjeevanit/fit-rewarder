@@ -3,19 +3,13 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { goalsData, workoutHistory } from '@/lib/workoutData';
 import ProgressCircle from '@/components/ProgressCircle';
-import { Calendar, CheckSquare, Plus, Target } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { toast } from "sonner";
+import { Calendar, CheckSquare } from 'lucide-react';
+import GoalManager from '@/components/GoalManager';
 
 const Progress = () => {
   // Calculate stats
   const totalWorkouts = workoutHistory.reduce((acc, curr) => acc + curr.count, 0);
   const daysWithWorkouts = workoutHistory.length;
-  const targetGoalsCompleted = goalsData.filter(goal => goal.completed).length;
-  
-  const handleAddGoal = () => {
-    toast.success("Goal creation will be available in the next update!");
-  };
   
   return (
     <Layout>
@@ -48,47 +42,7 @@ const Progress = () => {
         </section>
         
         <section className="mb-8 animate-reveal-delay-2">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Your Goals</h2>
-            <Button variant="outline" size="sm" onClick={handleAddGoal}>
-              <Plus size={16} className="mr-1" />
-              Add Goal
-            </Button>
-          </div>
-          
-          {goalsData.map((goal) => (
-            <div key={goal.id} className="glass-card rounded-2xl p-4 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="bg-primary/10 p-2 rounded-lg">
-                  <Target size={18} className="text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium">{goal.description}</h3>
-                  
-                  <div className="mt-2 w-full">
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                      <div
-                        className="bg-primary h-2 rounded-full transition-all duration-700 ease-out"
-                        style={{ width: `${(goal.current / goal.target) * 100}%` }}
-                      />
-                    </div>
-                    <div className="flex justify-between mt-1">
-                      <span className="text-xs text-gray-500">{goal.current}/{goal.target}</span>
-                      <span className="text-xs text-gray-500">{goal.unit}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <ProgressCircle 
-                  value={goal.current}
-                  max={goal.target}
-                  size={60}
-                  strokeWidth={4}
-                  textClassName="text-sm font-medium"
-                />
-              </div>
-            </div>
-          ))}
+          <GoalManager initialGoals={goalsData} />
         </section>
         
         <section className="animate-reveal-delay-3">
