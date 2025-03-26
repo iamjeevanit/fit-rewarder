@@ -2,6 +2,7 @@
 import React from 'react';
 import { Workout } from '@/lib/workoutData';
 import { Dumbbell, ArrowUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface WorkoutCardProps {
   workout: Workout;
@@ -9,6 +10,8 @@ interface WorkoutCardProps {
 }
 
 const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout, onClick }) => {
+  const navigate = useNavigate();
+  
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
@@ -22,10 +25,18 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout, onClick }) => {
     }
   };
 
+  const handleStartWorkout = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      navigate(`/workout/${workout.id}`);
+    }
+  };
+
   return (
     <div 
       className="glass-card card-hover rounded-2xl p-4 mb-4 animate-reveal w-full cursor-pointer"
-      onClick={onClick}
+      onClick={handleStartWorkout}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">

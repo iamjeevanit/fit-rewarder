@@ -3,11 +3,20 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { goalsData, workoutData } from '@/lib/workoutData';
 import { Award, Check, ChevronRight, Dumbbell, Plus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProgressCircle from '@/components/ProgressCircle';
 import { Button } from '@/components/ui/button';
 
 const Index = () => {
+  const navigate = useNavigate();
+  
+  const handleStartRandomWorkout = () => {
+    // Pick a random workout
+    const randomIndex = Math.floor(Math.random() * workoutData.length);
+    const randomWorkout = workoutData[randomIndex];
+    navigate(`/workout/${randomWorkout.id}`);
+  };
+  
   return (
     <Layout>
       <div className="animate-reveal">
@@ -32,7 +41,7 @@ const Index = () => {
                 <p className="text-gray-600 text-sm mt-1">2/3 workouts completed</p>
                 
                 <div className="mt-4">
-                  <Button className="bg-primary hover:bg-primary/90">
+                  <Button className="bg-primary hover:bg-primary/90" onClick={handleStartRandomWorkout}>
                     <Plus size={16} className="mr-2" />
                     Start Workout
                   </Button>
@@ -89,7 +98,12 @@ const Index = () => {
                     <p className="text-xs text-gray-600">{workout.defaultSets} sets • {workout.defaultReps} reps</p>
                   </div>
                 </div>
-                <Button size="sm" variant="outline" className="rounded-full">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="rounded-full"
+                  onClick={() => navigate(`/workout/${workout.id}`)}
+                >
                   <Plus size={16} />
                 </Button>
               </div>

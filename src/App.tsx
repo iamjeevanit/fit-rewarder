@@ -9,6 +9,7 @@ import Workouts from "./pages/Workouts";
 import Achievements from "./pages/Achievements";
 import Progress from "./pages/Progress";
 import NotFound from "./pages/NotFound";
+import WorkoutSession from "./pages/WorkoutSession";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/progress" element={<Progress />} />
+          <Route path="/workout/:workoutId" element={<WorkoutSession />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

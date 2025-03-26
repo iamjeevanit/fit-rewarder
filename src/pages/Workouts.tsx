@@ -6,6 +6,7 @@ import WorkoutCard from '@/components/WorkoutCard';
 import { Dumbbell, Heart, Calendar, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   { name: 'All', icon: Dumbbell, active: true },
@@ -17,6 +18,7 @@ const categories = [
 const Workouts = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [activeCategory, setActiveCategory] = React.useState('All');
+  const navigate = useNavigate();
   
   const filteredWorkouts = workoutData.filter(workout => {
     const matchesQuery = workout.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -28,11 +30,7 @@ const Workouts = () => {
   });
   
   const handleWorkoutStart = (workoutId: string) => {
-    // In a real app, this would navigate to a workout detail page
-    const workout = workoutData.find(w => w.id === workoutId);
-    if (workout) {
-      toast.success(`Starting ${workout.name} workout`);
-    }
+    navigate(`/workout/${workoutId}`);
   };
   
   return (
