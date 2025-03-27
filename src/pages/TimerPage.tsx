@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import ExerciseTimer from '@/components/ExerciseTimer';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle, DialogHeader } from '@/components/ui/dialog';
-import { motion } from '@/@/node_modules/framer-motion';
+import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
 interface TimerHistoryItem {
