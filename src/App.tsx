@@ -10,6 +10,7 @@ import Achievements from "./pages/Achievements";
 import Progress from "./pages/Progress";
 import NotFound from "./pages/NotFound";
 import WorkoutSession from "./pages/WorkoutSession";
+import TimerPage from "./pages/TimerPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/workout/:workoutId" element={<WorkoutSession />} />
+          <Route path="/timer" element={<TimerPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
