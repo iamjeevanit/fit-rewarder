@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { workoutData } from '@/lib/workoutData';
-import { ArrowLeft, Play, Pause, CheckCircle, XCircle, ChevronRight, Info } from 'lucide-react';
+import { ArrowLeft, Play, Pause, CheckCircle, XCircle, ChevronRight, Info, Timer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -18,6 +18,8 @@ const WorkoutSession = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [restTime, setRestTime] = useState(30); // Rest time in seconds
+  const [workoutStarted, setWorkoutStarted] = useState(false);
+  const [workoutTime, setWorkoutTime] = useState(0);
   
   const workout = workoutData.find(w => w.id === workoutId);
   
@@ -27,6 +29,23 @@ const WorkoutSession = () => {
       navigate('/workouts');
     }
   }, [workout, navigate]);
+  
+  // Start the workout timer
+  const startWorkout = () => {
+    setWorkoutStarted(true);
+    toast.success("Workout started!");
+  };
+  
+  // Save workout time to history when complete
+  const handleFinishWorkout = () => {
+    // If we have a workout time recorded, save it to history
+    if (workoutTime > 0) {
+      navigate('/timer', { state: { timeToSave: workoutTime } });
+    } else {
+      navigate('/');
+      toast.success("Workout session saved!");
+    }
+  };
   
   if (!workout) return null;
   
@@ -43,11 +62,6 @@ const WorkoutSession = () => {
   
   const handleSkipRest = () => {
     setIsResting(false);
-  };
-  
-  const handleFinishWorkout = () => {
-    navigate('/');
-    toast.success("Workout session saved!");
   };
   
   const handleTogglePause = () => {
@@ -237,8 +251,52 @@ const WorkoutSession = () => {
       </header>
       
       <main className="flex-1 p-4 max-w-md mx-auto w-full">
-        {!isComplete ? (
+        {!workoutStarted ? (
+          /* Workout Start Screen */
+          <div className="glass-card rounded-2xl p-6 animate-reveal text-center">
+            <div className="bg-primary/10 text-primary p-3 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Timer size={32} />
+            </div>
+            <h2 className="font-bold text-xl mb-2">Ready to start {workout.name}?</h2>
+            <p className="text-gray-600 mb-6">
+              This workout consists of {workout.defaultSets} sets of {workout.defaultReps} reps.
+              We'll track your time and help you maintain proper form.
+            </p>
+            
+            <div className="glass-card rounded-xl p-4 mb-6">
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-600">Target Muscles</span>
+                <span className="font-medium">{workout.targetMuscles.join(', ')}</span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-600">Difficulty</span>
+                <span className="font-medium capitalize">{workout.difficulty}</span>
+              </div>
+            </div>
+            
+            <Button 
+              onClick={startWorkout}
+              className="w-full"
+            >
+              Start Workout
+              <Play size={16} />
+            </Button>
+          </div>
+        ) : !isComplete ? (
           <>
+            {/* Workout Timer */}
+            <div className="glass-card rounded-2xl p-4 mb-4 animate-reveal">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-medium text-gray-600">Workout Time</h3>
+                <ExerciseTimer 
+                  showControls={false}
+                  size="sm"
+                  isPaused={isPaused}
+                  onTimeUpdate={setWorkoutTime}
+                />
+              </div>
+            </div>
+            
             {/* Workout Progress */}
             <div className="glass-card rounded-2xl p-6 mb-6 animate-reveal">
               <div className="flex items-center justify-between mb-4">
@@ -364,9 +422,13 @@ const WorkoutSession = () => {
                 <span className="text-gray-600">Total Reps</span>
                 <span className="font-medium">{workout.defaultSets * workout.defaultReps}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between mb-2">
                 <span className="text-gray-600">Target Muscles</span>
                 <span className="font-medium">{workout.targetMuscles.join(', ')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Workout Time</span>
+                <span className="font-medium">{Math.floor(workoutTime / 60)}:{(workoutTime % 60).toString().padStart(2, '0')}</span>
               </div>
             </div>
             
@@ -374,7 +436,7 @@ const WorkoutSession = () => {
               onClick={handleFinishWorkout}
               className="w-full"
             >
-              Finish Workout
+              Finish & Save Time
               <ChevronRight size={16} />
             </Button>
           </div>

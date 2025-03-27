@@ -4,10 +4,11 @@ import { ArrowLeft, ChevronDown, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import ExerciseTimer from '@/components/ExerciseTimer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle, DialogHeader } from '@/components/ui/dialog';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
 
 interface TimerHistoryItem {
   id: string;
@@ -17,11 +18,23 @@ interface TimerHistoryItem {
 
 const TimerPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [history, setHistory] = useState<TimerHistoryItem[]>(() => {
     const saved = localStorage.getItem('timer-history');
     return saved ? JSON.parse(saved) : [];
   });
   const [showHistory, setShowHistory] = useState(false);
+  
+  // Check if we have a time to save from a workout
+  useEffect(() => {
+    const state = location.state as { timeToSave?: number } | null;
+    if (state?.timeToSave) {
+      handleSaveTime(state.timeToSave);
+      // Clear the state after saving
+      navigate(location.pathname, { replace: true });
+      toast.success("Workout time saved to history!");
+    }
+  }, [location]);
   
   // Save history to localStorage whenever it changes
   useEffect(() => {

@@ -12,6 +12,7 @@ interface ExerciseTimerProps {
   showControls?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   onSaveTime?: (timeInSeconds: number) => void;
+  onTimeUpdate?: (timeInSeconds: number) => void;
 }
 
 interface TimerHistoryItem {
@@ -25,7 +26,8 @@ const ExerciseTimer: React.FC<ExerciseTimerProps> = ({
   onComplete,
   showControls = false,
   size = 'md',
-  onSaveTime
+  onSaveTime,
+  onTimeUpdate
 }) => {
   const [timeLeft, setTimeLeft] = useState(duration > 0 ? duration : 0);
   const [isPaused, setIsPaused] = useState(externalPaused || false);
@@ -43,6 +45,13 @@ const ExerciseTimer: React.FC<ExerciseTimerProps> = ({
   const { container, text, stroke } = sizeMap[size];
   const radius = size === 'xl' ? 120 : 45;
   const circumference = 2 * Math.PI * radius;
+  
+  // Effect to sync with external pause state
+  useEffect(() => {
+    if (externalPaused !== undefined) {
+      setIsPaused(externalPaused);
+    }
+  }, [externalPaused]);
   
   // Effect to handle countdown/countup timer
   useEffect(() => {
@@ -63,6 +72,13 @@ const ExerciseTimer: React.FC<ExerciseTimerProps> = ({
     
     return () => clearTimeout(timer);
   }, [timeLeft, isPaused, onComplete, isCountUp, elapsedTime]);
+  
+  // Update parent component with current time
+  useEffect(() => {
+    if (onTimeUpdate && isCountUp) {
+      onTimeUpdate(elapsedTime);
+    }
+  }, [elapsedTime, onTimeUpdate, isCountUp]);
   
   // Format time as MM:SS
   const formatTime = useCallback((seconds: number) => {
