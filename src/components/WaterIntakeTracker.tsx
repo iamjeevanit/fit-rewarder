@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Droplet, PlusCircle, MinusCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,7 +9,8 @@ import {
   WaterTracking, 
   calculateTodayIntake, 
   formatWaterAmount, 
-  getWaterGoalPercentage 
+  getWaterGoalPercentage,
+  getTodayLogs
 } from '@/lib/waterIntakeData';
 
 interface WaterIntakeTrackerProps {
