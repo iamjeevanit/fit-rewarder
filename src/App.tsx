@@ -14,6 +14,7 @@ import TimerPage from "./pages/TimerPage";
 import WorkoutPlans from "./pages/WorkoutPlans";
 import WorkoutPlanDetail from "./pages/WorkoutPlanDetail";
 import WaterIntake from "./pages/WaterIntake";
+import WorkoutStats from "./pages/WorkoutStats";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/workout/:workoutId" element={<WorkoutSession />} />
           <Route path="/timer" element={<TimerPage />} />
           <Route path="/water-intake" element={<WaterIntake />} />
+          <Route path="/workout-stats" element={<WorkoutStats />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

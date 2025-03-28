@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '@/components/Layout';
 import { goalsData, workoutData } from '@/lib/workoutData';
-import { Award, Check, ChevronRight, Dumbbell, Plus } from 'lucide-react';
+import { Award, Check, ChevronRight, Dumbbell, Plus, ChartBar } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ProgressCircle from '@/components/ProgressCircle';
 import { Button } from '@/components/ui/button';
@@ -108,6 +108,36 @@ const Index = () => {
                 </Button>
               </div>
             ))}
+          </div>
+        </section>
+        
+        <section className="mb-8 animate-reveal-delay-2">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">Workout Statistics</h2>
+            <Link to="/workout-stats" className="text-primary text-sm font-medium flex items-center">
+              View details
+              <ChevronRight size={16} className="ml-1" />
+            </Link>
+          </div>
+          
+          <div className="glass-card rounded-2xl p-4 flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="bg-primary/10 p-3 rounded-xl mr-4">
+                <ChartBar size={20} className="text-primary" />
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900">Workout Progress</h3>
+                <p className="text-xs text-gray-600">Track your activity and goals</p>
+              </div>
+            </div>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="rounded-full"
+              onClick={() => navigate('/workout-stats')}
+            >
+              <ChartBar size={16} />
+            </Button>
           </div>
         </section>
         
