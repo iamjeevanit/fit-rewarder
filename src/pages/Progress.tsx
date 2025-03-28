@@ -3,13 +3,17 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { goalsData, workoutHistory } from '@/lib/workoutData';
 import ProgressCircle from '@/components/ProgressCircle';
-import { Calendar, CheckSquare } from 'lucide-react';
+import { Calendar, CheckSquare, Droplet } from 'lucide-react';
 import GoalManager from '@/components/GoalManager';
+import { getWaterSummary } from '@/lib/waterIntakeUtils';
 
 const Progress = () => {
   // Calculate stats
   const totalWorkouts = workoutHistory.reduce((acc, curr) => acc + curr.count, 0);
   const daysWithWorkouts = workoutHistory.length;
+  
+  // Get water intake summary
+  const waterSummary = getWaterSummary();
   
   return (
     <Layout>
@@ -22,7 +26,7 @@ const Progress = () => {
         <section className="mb-8 animate-reveal-delay-1">
           <h2 className="text-xl font-semibold mb-4">Key Stats</h2>
           
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="glass-card rounded-2xl p-4 flex flex-col items-center">
               <div className="bg-blue-50 p-2 rounded-lg mb-2">
                 <Calendar size={20} className="text-blue-600" />
@@ -37,6 +41,14 @@ const Progress = () => {
               </div>
               <span className="text-2xl font-bold">{totalWorkouts}</span>
               <span className="text-sm text-gray-500">Workouts</span>
+            </div>
+            
+            <div className="glass-card rounded-2xl p-4 flex flex-col items-center">
+              <div className="bg-blue-50 p-2 rounded-lg mb-2">
+                <Droplet size={20} className="text-blue-600" />
+              </div>
+              <span className="text-2xl font-bold">{waterSummary.percentage}%</span>
+              <span className="text-sm text-gray-500">Hydration</span>
             </div>
           </div>
         </section>

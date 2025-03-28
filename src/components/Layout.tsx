@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Timer, BarChart2, Award, Users, 
-  Menu, X, Settings, LogOut, User, Dumbbell, Calendar
+  Menu, X, Settings, LogOut, User, Dumbbell, Calendar, Droplet
 } from 'lucide-react';
 import { 
   Sheet, SheetContent, SheetHeader, 
@@ -20,6 +20,7 @@ const navItems = [
   { name: 'Home', path: '/', icon: User },
   { name: 'Workouts', path: '/workouts', icon: Dumbbell },
   { name: 'Workout Plans', path: '/workout-plans', icon: Calendar },
+  { name: 'Water Intake', path: '/water-intake', icon: Droplet },
   { name: 'Achievements', path: '/achievements', icon: Award },
   { name: 'Progress', path: '/progress', icon: BarChart2 },
 ];
