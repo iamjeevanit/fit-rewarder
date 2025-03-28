@@ -114,6 +114,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Logout
               </Button>
             </div>
+            {/* New footer attribution */}
+            <div className="text-center text-xs text-muted-foreground mt-4 border-t pt-2">
+              Built with ❤️ by <a 
+                href="https://iamjeevan.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:underline text-primary"
+              >
+                iamjeevan.com
+              </a>
+            </div>
           </div>
         </aside>
 
@@ -123,22 +134,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </main>
       </div>
 
-      {/* Mobile Navigation */}
-      <nav className="md:hidden sticky bottom-0 w-full bg-card border-t">
-        <div className="flex justify-around px-2 py-3">
-          {navItems.map((item) => (
-            <Button
-              key={item.name}
-              variant="ghost"
-              size="icon"
-              className={isActive(item.path) ? "text-primary bg-primary/10" : ""}
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon className="h-5 w-5" />
-            </Button>
-          ))}
-        </div>
-      </nav>
+      {/* Mobile Navigation Footer */}
+      <div className="md:hidden text-center text-xs text-muted-foreground py-2 bg-card border-t">
+        Built with ❤️ by <a 
+          href="https://iamjeevan.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="hover:underline text-primary"
+        >
+          iamjeevan.com
+        </a>
+      </div>
     </div>
   );
 };
