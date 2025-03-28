@@ -11,6 +11,8 @@ import Progress from "./pages/Progress";
 import NotFound from "./pages/NotFound";
 import WorkoutSession from "./pages/WorkoutSession";
 import TimerPage from "./pages/TimerPage";
+import WorkoutPlans from "./pages/WorkoutPlans";
+import WorkoutPlanDetail from "./pages/WorkoutPlanDetail";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/workouts" element={<Workouts />} />
+          <Route path="/workout-plans" element={<WorkoutPlans />} />
+          <Route path="/workout-plans/:planId" element={<WorkoutPlanDetail />} />
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/workout/:workoutId" element={<WorkoutSession />} />

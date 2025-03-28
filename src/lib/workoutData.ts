@@ -1,4 +1,3 @@
-
 export interface Workout {
   id: string;
   name: string;
@@ -9,6 +8,21 @@ export interface Workout {
   defaultSets: number;
   defaultReps: number;
   iconName?: string;
+}
+
+export interface WorkoutPlan {
+  id: string;
+  name: string;
+  description: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  duration: string; // e.g., "4 weeks"
+  frequency: string; // e.g., "3x per week"
+  workouts: {
+    day: number;
+    workoutIds: string[];
+  }[];
+  goals: string[];
+  imageUrl?: string;
 }
 
 export type WorkoutCategory = 'strength' | 'cardio' | 'flexibility' | 'balance';
@@ -107,6 +121,104 @@ export const workoutData: Workout[] = [
     defaultSets: 3,
     defaultReps: 10, // per leg
     iconName: 'activity'
+  }
+];
+
+// Sample workout plans data
+export const workoutPlansData: WorkoutPlan[] = [
+  {
+    id: '1',
+    name: 'Beginner Bodyweight Basics',
+    description: 'Perfect for newcomers to fitness. Simple bodyweight exercises to build foundational strength and mobility.',
+    difficulty: 'beginner',
+    duration: '4 weeks',
+    frequency: '3x per week',
+    workouts: [
+      {
+        day: 1,
+        workoutIds: ['2', '3', '6'] // Air Squats, Plank, Lunges
+      },
+      {
+        day: 2,
+        workoutIds: ['1', '5'] // Push-ups, Mountain Climbers
+      },
+      {
+        day: 3,
+        workoutIds: ['2', '3', '4'] // Air Squats, Plank, Burpees
+      }
+    ],
+    goals: [
+      'Build basic strength and endurance',
+      'Improve mobility and flexibility',
+      'Establish workout consistency'
+    ]
+  },
+  {
+    id: '2',
+    name: 'Cardio Conditioning',
+    description: 'A progressive plan focused on improving cardiovascular fitness and endurance through bodyweight exercises.',
+    difficulty: 'intermediate',
+    duration: '6 weeks',
+    frequency: '4x per week',
+    workouts: [
+      {
+        day: 1,
+        workoutIds: ['4', '5'] // Burpees, Mountain Climbers
+      },
+      {
+        day: 2,
+        workoutIds: ['1', '2', '6'] // Push-ups, Air Squats, Lunges
+      },
+      {
+        day: 3,
+        workoutIds: ['4', '5'] // Burpees, Mountain Climbers
+      },
+      {
+        day: 4,
+        workoutIds: ['1', '2', '3'] // Push-ups, Air Squats, Plank
+      }
+    ],
+    goals: [
+      'Improve cardiovascular health',
+      'Increase stamina and endurance',
+      'Build lean muscle'
+    ]
+  },
+  {
+    id: '3',
+    name: 'Advanced Full-Body Challenge',
+    description: 'High-intensity workouts designed for experienced fitness enthusiasts looking to push their limits.',
+    difficulty: 'advanced',
+    duration: '8 weeks',
+    frequency: '5x per week',
+    workouts: [
+      {
+        day: 1,
+        workoutIds: ['1', '4'] // Push-ups, Burpees
+      },
+      {
+        day: 2,
+        workoutIds: ['2', '6'] // Air Squats, Lunges
+      },
+      {
+        day: 3,
+        workoutIds: ['3', '5'] // Plank, Mountain Climbers
+      },
+      {
+        day: 4,
+        workoutIds: ['1', '2', '6'] // Push-ups, Air Squats, Lunges
+      },
+      {
+        day: 5,
+        workoutIds: ['4', '5', '3'] // Burpees, Mountain Climbers, Plank
+      }
+    ],
+    goals: [
+      'Maximize strength and power',
+      'Optimize athletic performance',
+      'Challenge muscular endurance',
+      'Achieve peak fitness level'
+    ]
   }
 ];
 
